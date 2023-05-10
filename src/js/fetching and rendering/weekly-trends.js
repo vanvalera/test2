@@ -30,7 +30,7 @@ const createCard = async (movie, mediaQuery) => {
   class="btn-close js-btn-close-modal"
   data-modal-close
   arial-label="Close"
->       <span class="close--two btn-close__icon" width="14" height="14">✖</span>   </button>
+>       <span class="close--two btn-close__icon" width="14" height="14">Х</span>   </button>
 <div class="modal-card js-modal-card">
   <div class="modal-card__thumb-left">
         <img class="modal-card__img" src="https://image.tmdb.org/t/p/w500${
