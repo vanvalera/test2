@@ -441,7 +441,12 @@
         margin-bottom: 28px;
     }
 }
-
+.card:hover{
+    cursor: pointer;
+    transform: translateY(-5px);
+    scale: 1.05 ;
+        transition: all 0.2s ease-in-out;
+}
 
 
 

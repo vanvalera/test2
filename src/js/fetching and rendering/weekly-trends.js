@@ -80,9 +80,11 @@ const createCard = async (movie, mediaQuery) => {
       const addLibraryButton = modalContent.querySelector(
         '.js-add-library-btn'
       );
+
       // Добавление в локал сторедж
       addLibraryButton.addEventListener('click', event => {
         const movieId = addLibraryButton.dataset.id;
+
         const movieData = {
           id: movieId,
           nameFilm: movie.title,
@@ -92,9 +94,25 @@ const createCard = async (movie, mediaQuery) => {
         };
         let moviesInStorage =
           JSON.parse(localStorage.getItem('myLibrary:)')) || [];
-        moviesInStorage.push(movieData);
-        localStorage.setItem('myLibrary:)', JSON.stringify(moviesInStorage));
-        console.log('Фильм добавлен в библиотеку!');
+
+        // Проверяем, есть ли фильм в localStorage
+        const movieIndex = moviesInStorage.findIndex(
+          movie => movie.id === movieId
+        );
+
+        if (movieIndex === -1) {
+          // Фильма нет в localStorage, добавляем его
+          moviesInStorage.push(movieData);
+          localStorage.setItem('myLibrary:)', JSON.stringify(moviesInStorage));
+          console.log('Фильм добавлен в библиотеку!');
+          addLibraryButton.innerText = 'Удалить';
+        } else {
+          // Фильм есть в localStorage, удаляем его
+          moviesInStorage.splice(movieIndex, 1);
+          localStorage.setItem('myLibrary:)', JSON.stringify(moviesInStorage));
+          console.log('Фильм удалён из библиотеки!');
+          addLibraryButton.innerText = 'Добавить';
+        }
       });
 
       document.addEventListener('keyup', event => {
