@@ -72,6 +72,31 @@ const createCard = async (movie, mediaQuery) => {
       const modal = createModal(modalContent);
       document.body.appendChild(modal);
 
+      const closeButton = modalContent.querySelector('.js-btn-close-modal');
+      closeButton.addEventListener('click', event => {
+        const modal = closeButton.closest('.modal');
+        modal.remove();
+      });
+      const addLibraryButton = modalContent.querySelector(
+        '.js-add-library-btn'
+      );
+      // Добавление в локал сторедж
+      addLibraryButton.addEventListener('click', event => {
+        const movieId = addLibraryButton.dataset.id;
+        const movieData = {
+          id: movieId,
+          nameFilm: movie.title,
+          rating: movie.vote_average,
+          data: movie.release_date,
+          img: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        };
+        let moviesInStorage =
+          JSON.parse(localStorage.getItem('myLibrary:)')) || [];
+        moviesInStorage.push(movieData);
+        localStorage.setItem('myLibrary:)', JSON.stringify(moviesInStorage));
+        console.log('Фильм добавлен в библиотеку!');
+      });
+
       document.addEventListener('keyup', event => {
         if (event.key === 'Escape') {
           modal.remove();
@@ -79,14 +104,6 @@ const createCard = async (movie, mediaQuery) => {
       });
     } catch (error) {
       console.error(error);
-    }
-  });
-
-  document.addEventListener('click', event => {
-    const closeButton = event.target.closest('.js-btn-close-modal');
-    if (closeButton) {
-      const modal = closeButton.closest('.modal');
-      modal.remove();
     }
   });
 
